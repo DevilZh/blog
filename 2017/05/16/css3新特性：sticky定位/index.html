@@ -12,12 +12,12 @@
 
 
 
-  <meta name="description" content="使用Linux alias命令简化常用操作"/>
+  <meta name="description" content="你對本頁的描述 可以省略"/>
 
 
 
 
-  <meta name="keywords" content="Linux,命令行," />
+  <meta name="keywords" content="CSS3,新特性," />
 
 
 
@@ -31,20 +31,20 @@
 
 
 
-<link rel="canonical" href="https://devilzh.github.io/blog/2017/05/16/关于alias命令/"/>
+<link rel="canonical" href="https://devilzh.github.io/blog/2017/05/16/css3新特性：sticky定位/"/>
 
 
-<meta name="description" content="工作相关，Mac下使用命令行工具iTerm经常会手打一些常用命令, 今天突发奇想，如果我能把常见命令保存为一个单词，以后直接输入此单词就能代替这个命令该多好啊。网上查询了下，我的想法可行， Mac本质是Unix系统，所以很多地方跟Linux一样，文件系统中有几个特殊文件：  /etc/profile，/etc/bashrc 是系统全局环境变量设定~/.profile，~/.bashrc用户家目录下">
-<meta name="keywords" content="Linux,命令行">
+<meta name="description" content="你對本頁的描述 可以省略">
+<meta name="keywords" content="CSS3,新特性">
 <meta property="og:type" content="article">
-<meta property="og:title" content="使用Linux alias命令简化常用操作">
-<meta property="og:url" content="https://devilzh.github.io/blog/2017/05/16/关于alias命令/index.html">
+<meta property="og:title" content="position属性新增加一个属性：sticky">
+<meta property="og:url" content="https://devilzh.github.io/blog/2017/05/16/css3新特性：sticky定位/index.html">
 <meta property="og:site_name" content="荒野 Daimor">
-<meta property="og:description" content="工作相关，Mac下使用命令行工具iTerm经常会手打一些常用命令, 今天突发奇想，如果我能把常见命令保存为一个单词，以后直接输入此单词就能代替这个命令该多好啊。网上查询了下，我的想法可行， Mac本质是Unix系统，所以很多地方跟Linux一样，文件系统中有几个特殊文件：  /etc/profile，/etc/bashrc 是系统全局环境变量设定~/.profile，~/.bashrc用户家目录下">
-<meta property="og:updated_time" content="2017-05-16T10:03:13.000Z">
+<meta property="og:description" content="你對本頁的描述 可以省略">
+<meta property="og:updated_time" content="2017-05-16T10:19:16.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="使用Linux alias命令简化常用操作">
-<meta name="twitter:description" content="工作相关，Mac下使用命令行工具iTerm经常会手打一些常用命令, 今天突发奇想，如果我能把常见命令保存为一个单词，以后直接输入此单词就能代替这个命令该多好啊。网上查询了下，我的想法可行， Mac本质是Unix系统，所以很多地方跟Linux一样，文件系统中有几个特殊文件：  /etc/profile，/etc/bashrc 是系统全局环境变量设定~/.profile，~/.bashrc用户家目录下">
+<meta name="twitter:title" content="position属性新增加一个属性：sticky">
+<meta name="twitter:description" content="你對本頁的描述 可以省略">
 
 
 <link rel="stylesheet" type="text/css" href="/blog/css/style.css?v=2.4.x" />
@@ -71,7 +71,7 @@
 
 
 
-    <title> 使用Linux alias命令简化常用操作 · 荒野 Daimor </title>
+    <title> position属性新增加一个属性：sticky · 荒野 Daimor </title>
   </head>
 
   <body><div id="mobile-navbar" class="mobile-navbar">
@@ -170,7 +170,7 @@
     <header class="post-header">
       <h1 class="post-title">
         
-          使用Linux alias命令简化常用操作
+          position属性新增加一个属性：sticky
         
       </h1>
 
@@ -183,22 +183,24 @@
 
     
     
+  <div class="post-toc" id="post-toc">
+    <h2 class="post-toc-title">文章目录</h2>
+    <div class="post-toc-content">
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#简介"><span class="toc-text">简介</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#优点"><span class="toc-text">优点</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#缺陷"><span class="toc-text">缺陷</span></a></li></ol>
+    </div>
+  </div>
+
 
     <div class="post-content">
       
-        <p>工作相关，Mac下使用命令行工具iTerm经常会手打一些常用命令, 今天突发奇想，如果我能把常见命令保存为一个单词，以后直接输入此单词就能代替这个命令该多好啊。<br>网上查询了下，我的想法可行， Mac本质是Unix系统，所以很多地方跟Linux一样，文件系统中有几个特殊文件：</p>
-<blockquote>
-<p>/etc/profile，/etc/bashrc 是系统全局环境变量设定<br>~/.profile，~/.bashrc用户家目录下的私有环境变量设定</p>
-</blockquote>
-<p>今天以node的http-server（三方模块）命令举例：</p>
-<figure class="highlight powershell"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">sudo vi ~/.bashrc</div></pre></td></tr></table></figure>
-<p>加入如下代码：<br><figure class="highlight powershell"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">alias server=<span class="string">'sudo http-server -p 80 ./'</span></div></pre></td></tr></table></figure></p>
-<p>保存并退出，执行<br><figure class="highlight powershell"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">source ~/.bashrc</div></pre></td></tr></table></figure></p>
-<p>这样就可以直接在命令行打<code>server</code>来代替<code>sudo http-server -p 80 ./</code>了。<br>然后事情并没有那么顺利……</p>
-<p>当退出命令行工具或者重启系统后，之前的设置就不生效了，查找了好久，才知道，MacOS中默认并没有~/.bashrc文件，它只认~/.bash_profile 文件，就是说系统唤起或者命令行工具开启后，自动加载的是~/.bash_profile，所以一般Mac下配置环境变量的教程都是修改~/.bash_profile文件。</p>
-<p>所以解决办法大家差不多知道了:<br>把刚刚编辑的那行加入到~/.bash_profile中，再执行source启用;</p>
-<p> 或者仍然保留~/.bashrc文件，然后在~/.bash_profile中加入如下代码：<br><figure class="highlight powershell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">if</span> [ -f ~/.bashrc ]; then</div><div class="line">   source ~/.bashrc</div><div class="line">fi</div></pre></td></tr></table></figure></p>
-<p>意思即判断到有~/.bashrc文件的话， 就source启用它。</p>
+        <h2 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h2><p><code>posiiton: sticky;</code>类似于fixed定位，需要配合位置属性 top | bottom | left | right；</p>
+<p>与fixed定位的区别在于：sticky定位默认情况下跟static表现一致（没有定位），但随着页面滚动，元素超出视窗时，就变为fixed定位了。</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="selector-tag">div</span>&#123;</div><div class="line">	<span class="attribute">position</span>: sticky;</div><div class="line">	<span class="attribute">top</span>: <span class="number">0</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>⤴️ 两行CSS样式实现随着页面滚动NavBar粘在浏览器顶部的效果。</p>
+<h2 id="优点"><a href="#优点" class="headerlink" title="优点"></a>优点</h2><p>首先这种业务需求是非常常见的，以往我们的方式是js实时监测浏览器视窗滚动位置以及固定的navbar当前位置，综合判断是否需要修改定位属性为fixed，问题是在移动端很多webview出于性能考虑，对<code>onscroll</code>事件，以及<code>touchmove</code>事件做了节流，导致吸附效果会延迟，用户体验非常差。</p>
+<p>所以<code>sticky</code>的出现，让我们优雅的实现了这个需求。</p>
+<h2 id="缺陷"><a href="#缺陷" class="headerlink" title="缺陷"></a>缺陷</h2><p>兼容性很不好，移动端只有<code>iOS Safari</code>支持，桌面端<code>Firefox</code>支持，截止目前chrome最新版本 55.0.2883.95 (64-bit)不支持（据说后续版本会支持）。</p>
+<p>兼容性请参见<a href="http://caniuse.com/#search=sticky" target="_blank" rel="external">Can I Use</a></p>
 
       
     </div>
@@ -218,7 +220,7 @@
     </p>
     <p class="copyright-item">
       <span>链接: </span>
-      <a href="https://devilzh.github.io/blog/2017/05/16/关于alias命令/">https://devilzh.github.io/blog/2017/05/16/关于alias命令/</a>
+      <a href="https://devilzh.github.io/blog/2017/05/16/css3新特性：sticky定位/">https://devilzh.github.io/blog/2017/05/16/css3新特性：sticky定位/</a>
     </p>
 
     <p class="copyright-item lincese">
@@ -248,9 +250,9 @@
         
           <div class="post-tags">
             
-              <a href="/blog/tags/Linux/">Linux</a>
+              <a href="/blog/tags/CSS3/">CSS3</a>
             
-              <a href="/blog/tags/命令行/">命令行</a>
+              <a href="/blog/tags/新特性/">新特性</a>
             
           </div>
         
@@ -258,15 +260,9 @@
         
   <nav class="post-nav">
     
-      <a class="prev" href="/blog/2017/05/16/css3新特性：sticky定位/">
-        <i class="iconfont icon-left"></i>
-        <span class="prev-text nav-default">position属性新增加一个属性：sticky</span>
-        <span class="prev-text nav-mobile">上一篇</span>
-      </a>
     
-    
-      <a class="next" href="/blog/2017/05/16/hello-world/">
-        <span class="next-text nav-default">Hexo使用指南</span>
+      <a class="next" href="/blog/2017/05/16/关于alias命令/">
+        <span class="next-text nav-default">使用Linux alias命令简化常用操作</span>
         <span class="prev-text nav-mobile">下一篇</span>
         <i class="iconfont icon-right"></i>
       </a>
@@ -370,9 +366,9 @@
   
   <script type="text/javascript">
     var disqus_config = function () {
-        this.page.url = 'https://devilzh.github.io/blog/2017/05/16/关于alias命令/';
-        this.page.identifier = '2017/05/16/关于alias命令/';
-        this.page.title = '使用Linux alias命令简化常用操作';
+        this.page.url = 'https://devilzh.github.io/blog/2017/05/16/css3新特性：sticky定位/';
+        this.page.identifier = '2017/05/16/css3新特性：sticky定位/';
+        this.page.title = 'position属性新增加一个属性：sticky';
     };
     (function() {
     var d = document, s = d.createElement('script');
