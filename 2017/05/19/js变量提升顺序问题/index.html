@@ -12,12 +12,12 @@
 
 
 
-  <meta name="description" content="工作中写的一些常用代码"/>
+  <meta name="description" content="js函数、变量提升的顺序问题"/>
 
 
 
 
-  <meta name="keywords" content="收集," />
+  <meta name="keywords" content="JavaScript基础,js经验，js技巧," />
 
 
 
@@ -31,20 +31,20 @@
 
 
 
-<link rel="canonical" href="https://devilzh.github.io/blog/2017/05/19/适用代码收集/"/>
+<link rel="canonical" href="https://devilzh.github.io/blog/2017/05/19/js变量提升顺序问题/"/>
 
 
-<meta name="description" content="对数组洗牌：12345/** @param &amp;#123;Array&amp;#125; array 待洗牌数组*/const shuffle = (array) =&amp;gt; array.sort(()=&amp;gt; Math.random()&amp;gt;.5 );shuffle([1,2,3,4,5,6]) //[2,1,5,3,6,4] 将url query参数全部取出，返回obj: 1234567891011">
-<meta name="keywords" content="收集">
+<meta name="description" content="很早前就知道JavaScript语言有变量提升的特性，也有函数提升的特性（英文Hoisting),恰好今日的一个电话面试，面试官问道这个问题，暗自窃喜，然而没想到的是，他问我如果两者同时存在的时候，是先提升函数还是变量呢？一下就懵逼了，之前真没考虑过这个问题啊。。。 下来后，立即做了一个实验： 12345console.log(foo);var foo = &apos;Hello World!&apos;;funct">
+<meta name="keywords" content="JavaScript基础,js经验，js技巧">
 <meta property="og:type" content="article">
-<meta property="og:title" content="工作中写的一些常用代码">
-<meta property="og:url" content="https://devilzh.github.io/blog/2017/05/19/适用代码收集/index.html">
+<meta property="og:title" content="js函数、变量提升的顺序问题">
+<meta property="og:url" content="https://devilzh.github.io/blog/2017/05/19/js变量提升顺序问题/index.html">
 <meta property="og:site_name" content="荒野 Daimor">
-<meta property="og:description" content="对数组洗牌：12345/** @param &amp;#123;Array&amp;#125; array 待洗牌数组*/const shuffle = (array) =&amp;gt; array.sort(()=&amp;gt; Math.random()&amp;gt;.5 );shuffle([1,2,3,4,5,6]) //[2,1,5,3,6,4] 将url query参数全部取出，返回obj: 1234567891011">
-<meta property="og:updated_time" content="2017-05-19T04:13:58.000Z">
+<meta property="og:description" content="很早前就知道JavaScript语言有变量提升的特性，也有函数提升的特性（英文Hoisting),恰好今日的一个电话面试，面试官问道这个问题，暗自窃喜，然而没想到的是，他问我如果两者同时存在的时候，是先提升函数还是变量呢？一下就懵逼了，之前真没考虑过这个问题啊。。。 下来后，立即做了一个实验： 12345console.log(foo);var foo = &apos;Hello World!&apos;;funct">
+<meta property="og:updated_time" content="2017-05-19T10:33:41.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="工作中写的一些常用代码">
-<meta name="twitter:description" content="对数组洗牌：12345/** @param &amp;#123;Array&amp;#125; array 待洗牌数组*/const shuffle = (array) =&amp;gt; array.sort(()=&amp;gt; Math.random()&amp;gt;.5 );shuffle([1,2,3,4,5,6]) //[2,1,5,3,6,4] 将url query参数全部取出，返回obj: 1234567891011">
+<meta name="twitter:title" content="js函数、变量提升的顺序问题">
+<meta name="twitter:description" content="很早前就知道JavaScript语言有变量提升的特性，也有函数提升的特性（英文Hoisting),恰好今日的一个电话面试，面试官问道这个问题，暗自窃喜，然而没想到的是，他问我如果两者同时存在的时候，是先提升函数还是变量呢？一下就懵逼了，之前真没考虑过这个问题啊。。。 下来后，立即做了一个实验： 12345console.log(foo);var foo = &apos;Hello World!&apos;;funct">
 
 
 <link rel="stylesheet" type="text/css" href="/blog/css/style.css?v=2.4.x" />
@@ -81,7 +81,7 @@
 
 
 
-    <title> 工作中写的一些常用代码 · 荒野 Daimor </title>
+    <title> js函数、变量提升的顺序问题 · 荒野 Daimor </title>
   </head>
 
   <body><div id="mobile-navbar" class="mobile-navbar">
@@ -180,7 +180,7 @@
     <header class="post-header">
       <h1 class="post-title">
         
-          工作中写的一些常用代码
+          js函数、变量提升的顺序问题
         
       </h1>
 
@@ -196,9 +196,13 @@
 
     <div class="post-content">
       
-        <p>对数组洗牌：<br><figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="comment">/*</span></div><div class="line">* @param &#123;Array&#125; array 待洗牌数组</div><div class="line">*/</div><div class="line"><span class="keyword">const</span> shuffle = <span class="function">(<span class="params">array</span>) =&gt;</span> array.sort(<span class="function"><span class="params">()</span>=&gt;</span> <span class="built_in">Math</span>.random()&gt;<span class="number">.5</span> );</div><div class="line">shuffle([<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>,<span class="number">5</span>,<span class="number">6</span>]) <span class="comment">//[2,1,5,3,6,4]</span></div></pre></td></tr></table></figure></p>
-<p>将url query参数全部取出，返回obj:</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">queryString</span>(<span class="params">url</span>)</span>&#123;</div><div class="line">	<span class="keyword">var</span> str = url || <span class="built_in">window</span>.location.href;</div><div class="line">	<span class="keyword">var</span> reg = <span class="regexp">/(?:&amp;|\?)(\w+)=([^#&amp;$\/]+)/g</span></div><div class="line">	<span class="keyword">var</span> queryObj = &#123;&#125;;</div><div class="line">	<span class="keyword">while</span>(<span class="literal">true</span>) &#123;</div><div class="line">		<span class="keyword">var</span> match = reg.exec(str);</div><div class="line">		<span class="keyword">if</span> (!match) <span class="keyword">break</span>;</div><div class="line">		<span class="keyword">if</span>(match[<span class="number">1</span>])&#123;</div><div class="line">			queryObj[match[<span class="number">1</span>]] = match[<span class="number">2</span>];</div><div class="line">		&#125;</div><div class="line">	&#125;</div><div class="line">	<span class="keyword">return</span> queryObj;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+        <p>很早前就知道JavaScript语言有变量提升的特性，也有函数提升的特性（英文<code>Hoisting</code>),恰好今日的一个电话面试，面试官问道这个问题，暗自窃喜，然而没想到的是，他问我如果两者同时存在的时候，是先提升函数还是变量呢？一下就懵逼了，之前真没考虑过这个问题啊。。。</p>
+<p>下来后，立即做了一个实验：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="built_in">console</span>.log(foo);</div><div class="line"><span class="keyword">var</span> foo = <span class="string">'Hello World!'</span>;</div><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">foo</span>(<span class="params"></span>)</span>&#123;</div><div class="line">   <span class="comment">//balabala...</span></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>或者<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="built_in">console</span>.log(foo);</div><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">foo</span>(<span class="params"></span>)</span>&#123;</div><div class="line">   <span class="comment">//balabala...</span></div><div class="line">&#125;</div><div class="line"><span class="keyword">var</span> foo = <span class="string">'Hello World!'</span>;</div></pre></td></tr></table></figure></p>
+<p>结果打印出的都是function；</p>
+<p><code>结论</code>：由此可见，js中的函数或者变量提升特性，是先提升函数，再提升变量，（都是基础不扎实的锅啊😔）</p>
+
       
     </div>
 
@@ -217,7 +221,7 @@
     </p>
     <p class="copyright-item">
       <span>链接: </span>
-      <a href="https://devilzh.github.io/blog/2017/05/19/适用代码收集/">https://devilzh.github.io/blog/2017/05/19/适用代码收集/</a>
+      <a href="https://devilzh.github.io/blog/2017/05/19/js变量提升顺序问题/">https://devilzh.github.io/blog/2017/05/19/js变量提升顺序问题/</a>
     </p>
 
     <p class="copyright-item lincese">
@@ -247,7 +251,9 @@
         
           <div class="post-tags">
             
-              <a href="/blog/tags/收集/">收集</a>
+              <a href="/blog/tags/JavaScript基础/">JavaScript基础</a>
+            
+              <a href="/blog/tags/js经验，js技巧/">js经验，js技巧</a>
             
           </div>
         
@@ -255,15 +261,9 @@
         
   <nav class="post-nav">
     
-      <a class="prev" href="/blog/2017/05/19/js变量提升顺序问题/">
-        <i class="iconfont icon-left"></i>
-        <span class="prev-text nav-default">js函数、变量提升的顺序问题</span>
-        <span class="prev-text nav-mobile">上一篇</span>
-      </a>
     
-    
-      <a class="next" href="/blog/2017/05/16/CSS定位新属性 position: sticky/">
-        <span class="next-text nav-default">CSS新属性介绍position:&nbsp;sticky</span>
+      <a class="next" href="/blog/2017/05/19/适用代码收集/">
+        <span class="next-text nav-default">工作中写的一些常用代码</span>
         <span class="prev-text nav-mobile">下一篇</span>
         <i class="iconfont icon-right"></i>
       </a>
@@ -367,9 +367,9 @@
   
   <script type="text/javascript">
     var disqus_config = function () {
-        this.page.url = 'https://devilzh.github.io/blog/2017/05/19/适用代码收集/';
-        this.page.identifier = '2017/05/19/适用代码收集/';
-        this.page.title = '工作中写的一些常用代码';
+        this.page.url = 'https://devilzh.github.io/blog/2017/05/19/js变量提升顺序问题/';
+        this.page.identifier = '2017/05/19/js变量提升顺序问题/';
+        this.page.title = 'js函数、变量提升的顺序问题';
     };
     (function() {
     var d = document, s = d.createElement('script');

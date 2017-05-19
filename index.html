@@ -173,6 +173,49 @@
     <header class="post-header">
       <h1 class="post-title">
         
+          <a class="post-link" href="/blog/2017/05/19/js变量提升顺序问题/">js函数、变量提升的顺序问题</a>
+        
+      </h1>
+
+      <div class="post-meta">
+        <span class="post-time">
+          2017年5月19日
+        </span>
+      </div>
+    </header>
+
+    
+    
+
+    <div class="post-content">
+      
+        
+        
+
+        
+          <p>很早前就知道JavaScript语言有变量提升的特性，也有函数提升的特性（英文<code>Hoisting</code>),恰好今日的一个电话面试，面试官问道这个问题，暗自窃喜，然而没想到的是，他问我如果两者同时存在的时候，是先提升函数还是变量呢？一下就懵逼了，之前真没考虑过这个问题啊。。。</p>
+<p>下来后，立即做了一个实验：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="built_in">console</span>.log(foo);</div><div class="line"><span class="keyword">var</span> foo = <span class="string">'Hello World!'</span>;</div><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">foo</span>(<span class="params"></span>)</span>&#123;</div><div class="line">   <span class="comment">//balabala...</span></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>或者<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="built_in">console</span>.log(foo);</div><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">foo</span>(<span class="params"></span>)</span>&#123;</div><div class="line">   <span class="comment">//balabala...</span></div><div class="line">&#125;</div><div class="line"><span class="keyword">var</span> foo = <span class="string">'Hello World!'</span>;</div></pre></td></tr></table></figure></p>
+<p>结果打印出的都是function；</p>
+<p><code>结论</code>：由此可见，js中的函数或者变量提升特性，是先提升函数，再提升变量，（都是基础不扎实的锅啊😔）</p>
+
+        
+      
+    </div>
+
+    
+
+    
+
+  </article>
+
+    
+      
+  <article class="post">
+    <header class="post-header">
+      <h1 class="post-title">
+        
           <a class="post-link" href="/blog/2017/05/19/适用代码收集/">工作中写的一些常用代码</a>
         
       </h1>
