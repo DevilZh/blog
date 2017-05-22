@@ -34,17 +34,17 @@
 <link rel="canonical" href="https://devilzh.github.io/blog/2017/05/22/尾递归优化/"/>
 
 
-<meta name="description" content="今日看blog，看到一个新词汇”尾递归“，很有意思，认识到了编程中的递归不为人知的一面。概括一下就是，普通的函数递归调用可能会导致性能问题，比如常见的栈溢出，以常见的阶乘算法为例： 12345678function factorial(n)&amp;#123;    if(n == 1)&amp;#123;        return n;    &amp;#125;    else&amp;#123;        retur">
+<meta name="description" content="今日看技术blog，看到一个新词汇“尾递归”，发现了递归不为人知的一面。概括一下就是，普通的函数递归调用可能会导致性能问题，比如常见的栈溢出。 以常见的阶乘算法为例： 12345678function factorial(n)&amp;#123;    if(n == 1)&amp;#123;        return n;    &amp;#125;    else&amp;#123;        return n*fac">
 <meta name="keywords" content="js技巧,性能优化">
 <meta property="og:type" content="article">
 <meta property="og:title" content="尾递归与递归问题">
 <meta property="og:url" content="https://devilzh.github.io/blog/2017/05/22/尾递归优化/index.html">
 <meta property="og:site_name" content="荒野 Daimor">
-<meta property="og:description" content="今日看blog，看到一个新词汇”尾递归“，很有意思，认识到了编程中的递归不为人知的一面。概括一下就是，普通的函数递归调用可能会导致性能问题，比如常见的栈溢出，以常见的阶乘算法为例： 12345678function factorial(n)&amp;#123;    if(n == 1)&amp;#123;        return n;    &amp;#125;    else&amp;#123;        retur">
-<meta property="og:updated_time" content="2017-05-22T09:52:54.000Z">
+<meta property="og:description" content="今日看技术blog，看到一个新词汇“尾递归”，发现了递归不为人知的一面。概括一下就是，普通的函数递归调用可能会导致性能问题，比如常见的栈溢出。 以常见的阶乘算法为例： 12345678function factorial(n)&amp;#123;    if(n == 1)&amp;#123;        return n;    &amp;#125;    else&amp;#123;        return n*fac">
+<meta property="og:updated_time" content="2017-05-22T09:58:45.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="尾递归与递归问题">
-<meta name="twitter:description" content="今日看blog，看到一个新词汇”尾递归“，很有意思，认识到了编程中的递归不为人知的一面。概括一下就是，普通的函数递归调用可能会导致性能问题，比如常见的栈溢出，以常见的阶乘算法为例： 12345678function factorial(n)&amp;#123;    if(n == 1)&amp;#123;        return n;    &amp;#125;    else&amp;#123;        retur">
+<meta name="twitter:description" content="今日看技术blog，看到一个新词汇“尾递归”，发现了递归不为人知的一面。概括一下就是，普通的函数递归调用可能会导致性能问题，比如常见的栈溢出。 以常见的阶乘算法为例： 12345678function factorial(n)&amp;#123;    if(n == 1)&amp;#123;        return n;    &amp;#125;    else&amp;#123;        return n*fac">
 
 
 <link rel="stylesheet" type="text/css" href="/blog/css/style.css?v=2.4.x" />
@@ -193,20 +193,31 @@
 
     
     
+  <div class="post-toc" id="post-toc">
+    <h2 class="post-toc-title">文章目录</h2>
+    <div class="post-toc-content">
+      <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#参考文章："><span class="toc-text">参考文章：</span></a></li></ol>
+    </div>
+  </div>
+
 
     <div class="post-content">
       
-        <p>今日看blog，看到一个新词汇”<code>尾递归</code>“，很有意思，认识到了编程中的递归不为人知的一面。<br>概括一下就是，普通的函数递归调用可能会导致性能问题，比如常见的栈溢出，以常见的阶乘算法为例：</p>
+        <p>今日看技术blog，看到一个新词汇“<code>尾递归</code>”，发现了递归不为人知的一面。<br>概括一下就是，普通的函数递归调用可能会导致性能问题，比如常见的栈溢出。</p>
+<p>以常见的阶乘算法为例：</p>
 <figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">factorial</span>(<span class="params">n</span>)</span>&#123;</div><div class="line">    <span class="keyword">if</span>(n == <span class="number">1</span>)&#123;</div><div class="line">        <span class="keyword">return</span> n;</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">else</span>&#123;</div><div class="line">        <span class="keyword">return</span> n*factorial(n<span class="number">-1</span>);</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>这是我经常写的、再熟悉不过的递归，然而编程中并不建议这种写法，甚至是唾弃，为什么呢？ 因为这个函数返回了一个当前上下文中的变量乘以函数本身，这样的话，每次执行完此函数时，上下文并没有被垃圾回收机制回收，一直常驻着，加上递归循环后风险非常大。这时<code>尾递归</code>显而易见成为了针对这个问题的优化手段。</p>
+<p>这是我经常写的、再熟悉不过的递归，然而编程中并不建议这种写法，甚至是唾弃，为什么呢？ 因为这个函数返回值是一个当前上下文中的变量与函数本身的乘积，这样的话，每次执行完此函数，上下文并没有被垃圾回收机制回收，一直常驻着，加上递归循环后风险非常大。这时<code>尾递归</code>显而易见成为了针对这个问题的优化手段。</p>
 <p>先引入一个<code>尾调用</code>概念：</p>
 <blockquote>
 <p>尾调用是指某个函数的最后一步是调用另一个函数，除此之外没有进行任何其他操作。</p>
 </blockquote>
 <figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// 情况1</span></div><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">f</span>(<span class="params">x</span>)</span>&#123;</div><div class="line">  <span class="keyword">return</span> g(x);</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="comment">// 情况2</span></div><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">f</span>(<span class="params">x</span>)</span>&#123;</div><div class="line">  <span class="keyword">let</span> y = g(x);</div><div class="line">  <span class="keyword">return</span> y;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="comment">// 情况3</span></div><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">f</span>(<span class="params">x</span>)</span>&#123;</div><div class="line">  <span class="keyword">return</span> g(x) + <span class="number">1</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>以上只有情况1属于尾调用，因为进行了其他操作，所以2和3都不属于尾调用。<br>那么尾递归的定义，相比就清楚了：尾调用自身，就称为尾递归。<br>优化有的阶乘写法：</p>
+<p>以上只有情况1属于尾调用，因为进行了其他操作，所以2和3都不属于尾调用。<br>那么尾递归的定义，相比就清楚了：尾调用自身，就称为尾递归。</p>
+<p>优化后的阶乘写法：</p>
 <figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">factorial</span>(<span class="params">n, total = <span class="number">1</span></span>) </span>&#123;</div><div class="line">    <span class="keyword">if</span> (n === <span class="number">1</span>) <span class="keyword">return</span> total;</div><div class="line">    <span class="keyword">return</span> factorial(n - <span class="number">1</span>, n * total);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>参考文章：<br><a href="http://www.ruanyifeng.com/blog/2015/04/tail-call.html" target="_blank" rel="external">尾调用优化-阮一峰</a><br><a href="http://baike.baidu.com/item/%E5%B0%BE%E9%80%92%E5%BD%92" target="_blank" rel="external">百度百科词条”尾递归“</a></p>
+<p>尾递归优化，其实就是递归函数优化为尾调用形式的这个过程。</p>
+<h3 id="参考文章："><a href="#参考文章：" class="headerlink" title="参考文章："></a>参考文章：</h3><p><a href="http://www.ruanyifeng.com/blog/2015/04/tail-call.html" target="_blank" rel="external">尾调用优化-阮一峰</a></p>
+<p><a href="http://baike.baidu.com/item/%E5%B0%BE%E9%80%92%E5%BD%92" target="_blank" rel="external">百度百科词条”尾递归“</a></p>
 
       
     </div>
