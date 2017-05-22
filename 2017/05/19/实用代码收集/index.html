@@ -31,17 +31,17 @@
 
 
 
-<link rel="canonical" href="https://devilzh.github.io/blog/2017/05/19/适用代码收集/"/>
+<link rel="canonical" href="https://devilzh.github.io/blog/2017/05/19/实用代码收集/"/>
 
 
 <meta name="description" content="对数组洗牌：12345/** @param &amp;#123;Array&amp;#125; array 待洗牌数组*/const shuffle = (array) =&amp;gt; array.sort(()=&amp;gt; Math.random()&amp;gt;.5 );shuffle([1,2,3,4,5,6]) //[2,1,5,3,6,4] 将url query参数全部取出，返回obj: 1234567891011">
 <meta name="keywords" content="收集">
 <meta property="og:type" content="article">
 <meta property="og:title" content="工作中写的一些常用代码">
-<meta property="og:url" content="https://devilzh.github.io/blog/2017/05/19/适用代码收集/index.html">
+<meta property="og:url" content="https://devilzh.github.io/blog/2017/05/19/实用代码收集/index.html">
 <meta property="og:site_name" content="荒野 Daimor">
 <meta property="og:description" content="对数组洗牌：12345/** @param &amp;#123;Array&amp;#125; array 待洗牌数组*/const shuffle = (array) =&amp;gt; array.sort(()=&amp;gt; Math.random()&amp;gt;.5 );shuffle([1,2,3,4,5,6]) //[2,1,5,3,6,4] 将url query参数全部取出，返回obj: 1234567891011">
-<meta property="og:updated_time" content="2017-05-19T04:13:58.000Z">
+<meta property="og:updated_time" content="2017-05-22T03:04:33.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="工作中写的一些常用代码">
 <meta name="twitter:description" content="对数组洗牌：12345/** @param &amp;#123;Array&amp;#125; array 待洗牌数组*/const shuffle = (array) =&amp;gt; array.sort(()=&amp;gt; Math.random()&amp;gt;.5 );shuffle([1,2,3,4,5,6]) //[2,1,5,3,6,4] 将url query参数全部取出，返回obj: 1234567891011">
@@ -199,6 +199,8 @@
         <p>对数组洗牌：<br><figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="comment">/*</span></div><div class="line">* @param &#123;Array&#125; array 待洗牌数组</div><div class="line">*/</div><div class="line"><span class="keyword">const</span> shuffle = <span class="function">(<span class="params">array</span>) =&gt;</span> array.sort(<span class="function"><span class="params">()</span>=&gt;</span> <span class="built_in">Math</span>.random()&gt;<span class="number">.5</span> );</div><div class="line">shuffle([<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>,<span class="number">5</span>,<span class="number">6</span>]) <span class="comment">//[2,1,5,3,6,4]</span></div></pre></td></tr></table></figure></p>
 <p>将url query参数全部取出，返回obj:</p>
 <figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">queryString</span>(<span class="params">url</span>)</span>&#123;</div><div class="line">	<span class="keyword">var</span> str = url || <span class="built_in">window</span>.location.href;</div><div class="line">	<span class="keyword">var</span> reg = <span class="regexp">/(?:&amp;|\?)(\w+)=([^#&amp;$\/]+)/g</span></div><div class="line">	<span class="keyword">var</span> queryObj = &#123;&#125;;</div><div class="line">	<span class="keyword">while</span>(<span class="literal">true</span>) &#123;</div><div class="line">		<span class="keyword">var</span> match = reg.exec(str);</div><div class="line">		<span class="keyword">if</span> (!match) <span class="keyword">break</span>;</div><div class="line">		<span class="keyword">if</span>(match[<span class="number">1</span>])&#123;</div><div class="line">			queryObj[match[<span class="number">1</span>]] = match[<span class="number">2</span>];</div><div class="line">		&#125;</div><div class="line">	&#125;</div><div class="line">	<span class="keyword">return</span> queryObj;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>简单实现bind方法：<br><figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="built_in">Function</span>.prototype.bind = <span class="function"><span class="keyword">function</span>(<span class="params">obj</span>)</span>&#123;</div><div class="line">	<span class="keyword">let</span> _self = <span class="keyword">this</span>, arg = <span class="built_in">arguments</span>;</div><div class="line">	<span class="keyword">return</span> <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</div><div class="line">		_self.apply(obj || <span class="keyword">this</span>, <span class="built_in">Array</span>.prototype.slice.call(arg,<span class="number">1</span>));</div><div class="line">	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+
       
     </div>
 
@@ -217,7 +219,7 @@
     </p>
     <p class="copyright-item">
       <span>链接: </span>
-      <a href="https://devilzh.github.io/blog/2017/05/19/适用代码收集/">https://devilzh.github.io/blog/2017/05/19/适用代码收集/</a>
+      <a href="https://devilzh.github.io/blog/2017/05/19/实用代码收集/">https://devilzh.github.io/blog/2017/05/19/实用代码收集/</a>
     </p>
 
     <p class="copyright-item lincese">
@@ -367,8 +369,8 @@
   
   <script type="text/javascript">
     var disqus_config = function () {
-        this.page.url = 'https://devilzh.github.io/blog/2017/05/19/适用代码收集/';
-        this.page.identifier = '2017/05/19/适用代码收集/';
+        this.page.url = 'https://devilzh.github.io/blog/2017/05/19/实用代码收集/';
+        this.page.identifier = '2017/05/19/实用代码收集/';
         this.page.title = '工作中写的一些常用代码';
     };
     (function() {
