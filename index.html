@@ -18,7 +18,7 @@
 
 
 
-  <link rel="alternate" href="/blog/atom.xml" title="荒野 Daimor">
+  <link rel="alternate" href="/blog/atom.xml" title="Daimor">
 
 
 
@@ -31,11 +31,11 @@
 
 
 <meta property="og:type" content="website">
-<meta property="og:title" content="荒野 Daimor">
+<meta property="og:title" content="Daimor">
 <meta property="og:url" content="https://devilzh.github.io/blog/index.html">
-<meta property="og:site_name" content="荒野 Daimor">
+<meta property="og:site_name" content="Daimor">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="荒野 Daimor">
+<meta name="twitter:title" content="Daimor">
 
 
 <link rel="stylesheet" type="text/css" href="/blog/css/style.css?v=2.4.x" />
@@ -72,12 +72,12 @@
 
 
 
-    <title> 荒野 Daimor </title>
+    <title> Daimor </title>
   </head>
 
   <body><div id="mobile-navbar" class="mobile-navbar">
   <div class="mobile-header-logo">
-    <a href="/blog/." class="logo">荒野 Daimor</a>
+    <a href="/blog/." class="logo">Daimor</a>
   </div>
   <div class="mobile-navbar-icon">
     <span></span>
@@ -121,7 +121,7 @@
 
     <div class="container" id="mobile-panel">
       <header id="header" class="header"><div class="logo-wrapper">
-  <a href="/blog/." class="logo">荒野 Daimor</a>
+  <a href="/blog/." class="logo">Daimor</a>
 </div>
 
 <nav class="site-navbar">
@@ -167,6 +167,48 @@
           <div id="content" class="content">
             
   <section id="posts" class="posts">
+    
+      
+  <article class="post">
+    <header class="post-header">
+      <h1 class="post-title">
+        
+          <a class="post-link" href="/blog/2017/05/24/浅谈web安全/">使用Linux alias命令简化常用操作</a>
+        
+      </h1>
+
+      <div class="post-meta">
+        <span class="post-time">
+          2017年5月24日
+        </span>
+      </div>
+    </header>
+
+    
+    
+
+    <div class="post-content">
+      
+        
+        
+          
+        
+
+        
+          <p>科技的进步，互联网的日益繁荣，方便了人们的同时，也带来了安全隐患。作为前端工程师，我们应该注意到基本的web安全知识</p>
+          <div class="read-more">
+            <a href="/blog/2017/05/24/浅谈web安全/" class="read-more-link">阅读更多</a>
+          </div>
+        
+      
+    </div>
+
+    
+
+    
+
+  </article>
+
     
       
   <article class="post">
@@ -288,7 +330,7 @@
         
 
         
-          <p>对数组洗牌：<br><figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="comment">/*</span></div><div class="line">* @param &#123;Array&#125; array 待洗牌数组</div><div class="line">*/</div><div class="line"><span class="keyword">const</span> shuffle = <span class="function">(<span class="params">array</span>) =&gt;</span> array.sort(<span class="function"><span class="params">()</span>=&gt;</span> <span class="built_in">Math</span>.random()&gt;<span class="number">.5</span> );</div><div class="line">shuffle([<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>,<span class="number">5</span>,<span class="number">6</span>]) <span class="comment">//[2,1,5,3,6,4]</span></div></pre></td></tr></table></figure></p>
+          <p>对数组打乱洗牌：<br><figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="comment">/*</span></div><div class="line">* @param &#123;Array&#125; array 待洗牌数组</div><div class="line">*/</div><div class="line"><span class="keyword">const</span> shuffle = <span class="function">(<span class="params">array</span>) =&gt;</span> array.sort(<span class="function"><span class="params">()</span>=&gt;</span> <span class="built_in">Math</span>.random()&gt;<span class="number">.5</span> );</div><div class="line">shuffle([<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>,<span class="number">5</span>,<span class="number">6</span>]) <span class="comment">//[2,1,5,3,6,4]</span></div></pre></td></tr></table></figure></p>
 <p>将url query参数全部取出，返回obj:</p>
 <figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">queryString</span>(<span class="params">url</span>)</span>&#123;</div><div class="line">	<span class="keyword">var</span> str = url || <span class="built_in">window</span>.location.href;</div><div class="line">	<span class="keyword">var</span> reg = <span class="regexp">/(?:&amp;|\?)(\w+)=([^#&amp;$\/]+)/g</span></div><div class="line">	<span class="keyword">var</span> queryObj = &#123;&#125;;</div><div class="line">	<span class="keyword">while</span>(<span class="literal">true</span>) &#123;</div><div class="line">		<span class="keyword">var</span> match = reg.exec(str);</div><div class="line">		<span class="keyword">if</span> (!match) <span class="keyword">break</span>;</div><div class="line">		<span class="keyword">if</span>(match[<span class="number">1</span>])&#123;</div><div class="line">			queryObj[match[<span class="number">1</span>]] = match[<span class="number">2</span>];</div><div class="line">		&#125;</div><div class="line">	&#125;</div><div class="line">	<span class="keyword">return</span> queryObj;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
 <p>简单实现bind方法：<br><figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="built_in">Function</span>.prototype.bind = <span class="function"><span class="keyword">function</span>(<span class="params">obj</span>)</span>&#123;</div><div class="line">	<span class="keyword">let</span> _self = <span class="keyword">this</span>, arg = <span class="built_in">arguments</span>;</div><div class="line">	<span class="keyword">return</span> <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</div><div class="line">		_self.apply(obj || <span class="keyword">this</span>, <span class="built_in">Array</span>.prototype.slice.call(arg,<span class="number">1</span>));</div><div class="line">	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
