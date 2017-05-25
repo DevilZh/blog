@@ -41,7 +41,7 @@
 <meta property="og:url" content="https://devilzh.github.io/blog/2017/05/25/SPA页面路由的实现原理/index.html">
 <meta property="og:site_name" content="Daimor">
 <meta property="og:description" content="面试被问到spa单页应用的router原理是什么？一下就不知道怎么回答，很久前看到锅相关问题，大致是运用了HTML5中history API的pushstate,由于工作中用得少（都是直接上现成的第三方Router库）就没太关注这个。现在总结一下，前端单页应用的router实现无非是： pushState检测浏览器的history对象是否拥有pushState方法，有则直接使用，语法如下：1his">
-<meta property="og:updated_time" content="2017-05-25T12:02:45.000Z">
+<meta property="og:updated_time" content="2017-05-25T12:04:06.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="SPA页面路由的实现原理">
 <meta name="twitter:description" content="面试被问到spa单页应用的router原理是什么？一下就不知道怎么回答，很久前看到锅相关问题，大致是运用了HTML5中history API的pushstate,由于工作中用得少（都是直接上现成的第三方Router库）就没太关注这个。现在总结一下，前端单页应用的router实现无非是： pushState检测浏览器的history对象是否拥有pushState方法，有则直接使用，语法如下：1his">
@@ -207,8 +207,8 @@
 <h2 id="pushState"><a href="#pushState" class="headerlink" title="pushState"></a>pushState</h2><p>检测浏览器的history对象是否拥有pushState方法，有则直接使用，语法如下：<br><figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">history.pushState(state, title, url);</div></pre></td></tr></table></figure></p>
 <p>参数有三个,第2个是历史遗留问题现已忽略，一般传null,其他两个：</p>
 <ul>
-<li><code>state</code>:<code>状态对象</code>，作用是可以保存历史数据，因为也是存储在本地磁盘中，可以理解为localStorage等。但是区别是字符大小有限制，超过640kb会报错。通过此参数保存的数据，想使用的话，调用方式为<code>history.state</code>;</li>
-<li><code>url</code>：<code>变更后的url</code>,这个就是想要跳转到的页面地址，注意点是，必须跟当前url同域；还不仅支持hash跳转，同域下的任意url都行（这也是前端实现路由去“<code>#</code>”号的原理，需服务器端配合）。</li>
+<li><code>state</code>:<code>状态对象</code>，作用是可以保存历史数据，因为也是存储在本地磁盘中，可以理解为localStorage等。但是区别是字符大小有限制，超过640kb会报错。通过此参数保存的数据，获取方式为<code>history.state</code>;</li>
+<li><code>url</code>：<code>变更后的url</code>,这个就是想要跳转到的页面地址，注意点是，必须跟当前url同域；还不仅支持hash跳转，同域下的任意url都行（这也是前端实现SPA路由去“<code>#</code>”号的原理，需服务器端配合）。</li>
 </ul>
 <h2 id="location-hash"><a href="#location-hash" class="headerlink" title="location.hash"></a>location.hash</h2><p>如果不支持pushState方法， 就直接使用<code>window.location.hash</code>属性更改hash值（路由），同时监听<code>window.onhashchange</code>事件，做跳转后的操作。<br><figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="built_in">window</span>.location = <span class="string">'#foo'</span>;</div><div class="line"><span class="built_in">window</span>.location.hash = <span class="string">'#foo'</span>;</div><div class="line"><span class="built_in">window</span>.location.hash = <span class="string">'foo'</span>;</div></pre></td></tr></table></figure></p>
 <p>以上三种写法在浏览器Chrome都能生效。</p>
