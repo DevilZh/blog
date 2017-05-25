@@ -41,7 +41,7 @@
 <meta property="og:url" content="https://devilzh.github.io/blog/2017/05/22/尾递归优化/index.html">
 <meta property="og:site_name" content="Daimor">
 <meta property="og:description" content="今日看技术blog，看到一个新词汇“尾递归”，发现了递归不为人知的一面。概括一下就是，普通的函数递归调用可能会导致性能问题，比如常见的栈溢出。 以常见的阶乘算法为例： 12345678function factorial(n)&amp;#123;    if(n == 1)&amp;#123;        return n;    &amp;#125;    else&amp;#123;        return n*fac">
-<meta property="og:updated_time" content="2017-05-22T09:58:45.000Z">
+<meta property="og:updated_time" content="2017-05-25T03:40:37.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="尾递归与递归问题">
 <meta name="twitter:description" content="今日看技术blog，看到一个新词汇“尾递归”，发现了递归不为人知的一面。概括一下就是，普通的函数递归调用可能会导致性能问题，比如常见的栈溢出。 以常见的阶乘算法为例： 12345678function factorial(n)&amp;#123;    if(n == 1)&amp;#123;        return n;    &amp;#125;    else&amp;#123;        return n*fac">
@@ -206,7 +206,7 @@
         <p>今日看技术blog，看到一个新词汇“<code>尾递归</code>”，发现了递归不为人知的一面。<br>概括一下就是，普通的函数递归调用可能会导致性能问题，比如常见的栈溢出。</p>
 <p>以常见的阶乘算法为例：</p>
 <figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">factorial</span>(<span class="params">n</span>)</span>&#123;</div><div class="line">    <span class="keyword">if</span>(n == <span class="number">1</span>)&#123;</div><div class="line">        <span class="keyword">return</span> n;</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">else</span>&#123;</div><div class="line">        <span class="keyword">return</span> n*factorial(n<span class="number">-1</span>);</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>这是我经常写的、再熟悉不过的递归，然而编程中并不建议这种写法，甚至是唾弃，为什么呢？ 因为这个函数返回值是一个当前上下文中的变量与函数本身的乘积，这样的话，每次执行完此函数，上下文并没有被垃圾回收机制回收，一直常驻着，加上递归循环后风险非常大。这时<code>尾递归</code>显而易见成为了针对这个问题的优化手段。</p>
+<p>这是我经常写的、再熟悉不过的递归，然而编程中并不建议这种写法，甚至是唾弃，因为这个函数返回值是一个当前上下文中的变量与函数本身的乘积，这样的话，每次执行完此函数，上下文并没有被垃圾回收机制回收，一直常驻着，加上递归循环后风险非常大。这时<code>尾递归</code>显而易见成为了针对这个问题的优化手段。</p>
 <p>先引入一个<code>尾调用</code>概念：</p>
 <blockquote>
 <p>尾调用是指某个函数的最后一步是调用另一个函数，除此之外没有进行任何其他操作。</p>

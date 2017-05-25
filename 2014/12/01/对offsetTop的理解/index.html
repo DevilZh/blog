@@ -12,10 +12,12 @@
 
 
 
-  <meta name="description" content="跟风也来玩Hexo了🌝"/>
+  <meta name="description" content="DOM元素的offsetTop属性值"/>
 
 
 
+
+  <meta name="keywords" content="DOM操作,offsetTop," />
 
 
 
@@ -29,19 +31,20 @@
 
 
 
-<link rel="canonical" href="https://devilzh.github.io/blog/2017/05/16/hello-world/"/>
+<link rel="canonical" href="https://devilzh.github.io/blog/2014/12/01/对offsetTop的理解/"/>
 
 
-<meta name="description" content="跟风也来玩Hexo了🌝">
+<meta name="description" content="官方释义HTMLElement.offsetTop 为只读属性，它返回当前元素相对于其 offsetParent 元素的顶部的距离。 我的理解之前一直误以为返回的永远是元素到文档顶部的距离值，然而这种理解真的是too naive啊。。。这次遇到需求是图片元素露出窗口才可见的lazy load功能，offsetTop老是获取“错误”，才发现对此属性的理解就是错误的  🤣 这个offsetParen">
+<meta name="keywords" content="DOM操作,offsetTop">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Hexo使用指南">
-<meta property="og:url" content="https://devilzh.github.io/blog/2017/05/16/hello-world/index.html">
+<meta property="og:title" content="DOM元素的offsetTop属性值">
+<meta property="og:url" content="https://devilzh.github.io/blog/2014/12/01/对offsetTop的理解/index.html">
 <meta property="og:site_name" content="Daimor">
-<meta property="og:description" content="跟风也来玩Hexo了🌝">
-<meta property="og:updated_time" content="2017-05-16T10:38:58.000Z">
+<meta property="og:description" content="官方释义HTMLElement.offsetTop 为只读属性，它返回当前元素相对于其 offsetParent 元素的顶部的距离。 我的理解之前一直误以为返回的永远是元素到文档顶部的距离值，然而这种理解真的是too naive啊。。。这次遇到需求是图片元素露出窗口才可见的lazy load功能，offsetTop老是获取“错误”，才发现对此属性的理解就是错误的  🤣 这个offsetParen">
+<meta property="og:updated_time" content="2017-05-25T03:40:23.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Hexo使用指南">
-<meta name="twitter:description" content="跟风也来玩Hexo了🌝">
+<meta name="twitter:title" content="DOM元素的offsetTop属性值">
+<meta name="twitter:description" content="官方释义HTMLElement.offsetTop 为只读属性，它返回当前元素相对于其 offsetParent 元素的顶部的距离。 我的理解之前一直误以为返回的永远是元素到文档顶部的距离值，然而这种理解真的是too naive啊。。。这次遇到需求是图片元素露出窗口才可见的lazy load功能，offsetTop老是获取“错误”，才发现对此属性的理解就是错误的  🤣 这个offsetParen">
 
 
 <link rel="stylesheet" type="text/css" href="/blog/css/style.css?v=2.4.x" />
@@ -78,7 +81,7 @@
 
 
 
-    <title> Hexo使用指南 · Daimor </title>
+    <title> DOM元素的offsetTop属性值 · Daimor </title>
   </head>
 
   <body><div id="mobile-navbar" class="mobile-navbar">
@@ -177,13 +180,13 @@
     <header class="post-header">
       <h1 class="post-title">
         
-          Hexo使用指南
+          DOM元素的offsetTop属性值
         
       </h1>
 
       <div class="post-meta">
         <span class="post-time">
-          2017年5月16日
+          2014年12月1日
         </span>
       </div>
     </header>
@@ -193,22 +196,21 @@
   <div class="post-toc" id="post-toc">
     <h2 class="post-toc-title">文章目录</h2>
     <div class="post-toc-content">
-      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Quick-Start"><span class="toc-text">Quick Start</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Create-a-new-post"><span class="toc-text">Create a new post</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Run-server"><span class="toc-text">Run server</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Generate-static-files"><span class="toc-text">Generate static files</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Deploy-to-remote-sites"><span class="toc-text">Deploy to remote sites</span></a></li></ol></li></ol>
+      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#官方释义"><span class="toc-text">官方释义</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#我的理解"><span class="toc-text">我的理解</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#参考"><span class="toc-text">参考</span></a></li></ol>
     </div>
   </div>
 
 
     <div class="post-content">
       
-        <p>Welcome to <a href="https://hexo.io/" target="_blank" rel="external">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/" target="_blank" rel="external">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html" target="_blank" rel="external">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="external">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo new <span class="string">"My New Post"</span></div></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/writing.html" target="_blank" rel="external">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo server</div></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/server.html" target="_blank" rel="external">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo generate</div></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/generating.html" target="_blank" rel="external">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo deploy</div></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/deployment.html" target="_blank" rel="external">Deployment</a></p>
+        <h1 id="官方释义"><a href="#官方释义" class="headerlink" title="官方释义"></a>官方释义</h1><p>HTMLElement.offsetTop 为只读属性，它返回当前元素相对于其 offsetParent 元素的顶部的距离。</p>
+<h1 id="我的理解"><a href="#我的理解" class="headerlink" title="我的理解"></a>我的理解</h1><p>之前一直误以为返回的永远是元素到文档顶部的距离值，然而这种理解真的是too naive啊。。。<br>这次遇到需求是图片元素露出窗口才可见的lazy load功能，offsetTop老是获取“错误”，才发现对此属性的理解就是错误的  🤣</p>
+<p>这个offsetParent指元素最近的有定位属性的上级元素，有两个特殊情况需要注意：</p>
+<ul>
+<li>如果没有定位的元素，则 offsetParent 为最近的 table 元素对象或根元素（标准模式下为 html；quirks 模式下为 body）；</li>
+<li>当元素的 style.display 设置为 “none” 时，offsetParent 返回 null</li>
+</ul>
+<h1 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h1><p><a href="https://developer.mozilla.org/zh-CN/docs/Web/API/HTMLElement/offsetTop" target="_blank" rel="external">MDN/Web 技术文档/HTMLElement.offsetTop</a></p>
 
       
     </div>
@@ -226,22 +228,24 @@
     
       <footer class="post-footer">
         
+          <div class="post-tags">
+            
+              <a href="/blog/tags/DOM操作/">DOM操作</a>
+            
+              <a href="/blog/tags/offsetTop/">offsetTop</a>
+            
+          </div>
+        
         
         
   <nav class="post-nav">
     
-      <a class="prev" href="/blog/2017/05/16/关于alias命令/">
+      <a class="prev" href="/blog/2017/05/16/hello-world/">
         <i class="iconfont icon-left"></i>
-        <span class="prev-text nav-default">使用Linux alias命令简化常用操作</span>
+        <span class="prev-text nav-default">Hexo使用指南</span>
         <span class="prev-text nav-mobile">上一篇</span>
       </a>
     
-    
-      <a class="next" href="/blog/2014/12/01/对offsetTop的理解/">
-        <span class="next-text nav-default">DOM元素的offsetTop属性值</span>
-        <span class="prev-text nav-mobile">下一篇</span>
-        <i class="iconfont icon-right"></i>
-      </a>
     
   </nav>
 
@@ -342,9 +346,9 @@
   
   <script type="text/javascript">
     var disqus_config = function () {
-        this.page.url = 'https://devilzh.github.io/blog/2017/05/16/hello-world/';
-        this.page.identifier = '2017/05/16/hello-world/';
-        this.page.title = 'Hexo使用指南';
+        this.page.url = 'https://devilzh.github.io/blog/2014/12/01/对offsetTop的理解/';
+        this.page.identifier = '2014/12/01/对offsetTop的理解/';
+        this.page.title = 'DOM元素的offsetTop属性值';
     };
     (function() {
     var d = document, s = d.createElement('script');
