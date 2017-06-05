@@ -12,7 +12,7 @@
 
 
 
-  <meta name="description" content="尾递归与递归问题"/>
+  <meta name="description" content="再回首CSS3动画"/>
 
 
 
@@ -34,17 +34,17 @@
 <link rel="canonical" href="https://devilzh.github.io/blog/2017/06/05/css3动画优化/"/>
 
 
-<meta name="description" content="See the Pen Button hover effects with box-shadow by Giana (@giana) on CodePen.">
+<meta name="description" content="众所周知CSS3动画性能手段的铁律之一就是，尽量不要使用会导致重排重绘的属性，之前看到这个后，就囫囵吞枣记住了，之后都会使用这个手段来优化性能，然而每次被人问起为什么要使用transform变换代替top/left等时，我都会说因为transform不会导致重绘…, 事实上原理并不是太清楚。 经过文档查阅，浏览器渲染CSS的步骤其实为： Recalculate Style -&amp;gt; Layout">
 <meta name="keywords" content="js技巧,性能优化">
 <meta property="og:type" content="article">
-<meta property="og:title" content="尾递归与递归问题">
+<meta property="og:title" content="再回首CSS3动画">
 <meta property="og:url" content="https://devilzh.github.io/blog/2017/06/05/css3动画优化/index.html">
 <meta property="og:site_name" content="Daimor">
-<meta property="og:description" content="See the Pen Button hover effects with box-shadow by Giana (@giana) on CodePen.">
-<meta property="og:updated_time" content="2017-06-05T08:30:08.000Z">
+<meta property="og:description" content="众所周知CSS3动画性能手段的铁律之一就是，尽量不要使用会导致重排重绘的属性，之前看到这个后，就囫囵吞枣记住了，之后都会使用这个手段来优化性能，然而每次被人问起为什么要使用transform变换代替top/left等时，我都会说因为transform不会导致重绘…, 事实上原理并不是太清楚。 经过文档查阅，浏览器渲染CSS的步骤其实为： Recalculate Style -&amp;gt; Layout">
+<meta property="og:updated_time" content="2017-06-05T10:01:07.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="尾递归与递归问题">
-<meta name="twitter:description" content="See the Pen Button hover effects with box-shadow by Giana (@giana) on CodePen.">
+<meta name="twitter:title" content="再回首CSS3动画">
+<meta name="twitter:description" content="众所周知CSS3动画性能手段的铁律之一就是，尽量不要使用会导致重排重绘的属性，之前看到这个后，就囫囵吞枣记住了，之后都会使用这个手段来优化性能，然而每次被人问起为什么要使用transform变换代替top/left等时，我都会说因为transform不会导致重绘…, 事实上原理并不是太清楚。 经过文档查阅，浏览器渲染CSS的步骤其实为： Recalculate Style -&amp;gt; Layout">
 
 
 <link rel="stylesheet" type="text/css" href="/blog/css/style.css?v=2.4.x" />
@@ -81,7 +81,7 @@
 
 
 
-    <title> 尾递归与递归问题 · Daimor </title>
+    <title> 再回首CSS3动画 · Daimor </title>
   </head>
 
   <body><div id="mobile-navbar" class="mobile-navbar">
@@ -180,7 +180,7 @@
     <header class="post-header">
       <h1 class="post-title">
         
-          尾递归与递归问题
+          再回首CSS3动画
         
       </h1>
 
@@ -193,11 +193,45 @@
 
     
     
+  <div class="post-toc" id="post-toc">
+    <h2 class="post-toc-title">文章目录</h2>
+    <div class="post-toc-content">
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#其他优化手段"><span class="toc-text">其他优化手段</span></a></li></ol>
+    </div>
+  </div>
+
 
     <div class="post-content">
       
-        <p></p><p data-height="265" data-theme-id="0" data-slug-hash="BZaGyP" data-default-tab="css,result" data-user="giana" data-embed-version="2" data-pen-title="Button hover effects with box-shadow" class="codepen">See the Pen <a href="https://codepen.io/giana/pen/BZaGyP/" target="_blank" rel="external">Button hover effects with box-shadow</a> by Giana (<a href="https://codepen.io/giana" target="_blank" rel="external">@giana</a>) on <a href="https://codepen.io" target="_blank" rel="external">CodePen</a>.</p><p></p>
-<script async src="https://production-assets.codepen.io/assets/embed/ei.js"></script>
+        <p>众所周知CSS3动画性能手段的铁律之一就是，尽量不要使用会导致重排重绘的属性，之前看到这个后，就囫囵吞枣记住了，之后都会使用这个手段来优化性能，然而每次被人问起为什么要使用transform变换代替top/left等时，我都会说因为transform不会导致重绘…, 事实上原理并不是太清楚。</p>
+<p>经过文档查阅，浏览器渲染CSS的步骤其实为：</p>
+<p><code>Recalculate Style</code> -&gt; <code>Layout</code> -&gt; <code>Paint Setup and Paint</code> -&gt; <code>Composite Layers</code></p>
+<p>即：查找并计算样式 -&gt; 排布 -&gt; 绘制 -&gt; 组合层<br>注意， </p>
+<ul>
+<li>查询属性会导致重排。</li>
+<li>最后这个<code>组合层</code>，其实类似于PS中的图层概念， 浏览器中的元素通常也是有多个层的，经过一系列计算后，还要经过GPU组合图层才渲染出页面的。</li>
+<li>重排必然导致重绘，重绘不一定触发重排。</li>
+</ul>
+<p>为什么使用<code>transform</code>可以优化性能：<br><code>transform</code>属性改变，发生在<code>Composite Layers</code>这一层，所以不会经过前面的重排，重绘；并且还会触发GPU加速。从而大大提升性能。</p>
+<p>与<code>transform</code>属性类似的还有<code>opacity</code>，也是直接在<code>Composite Layers</code>这一层处理透明度。</p>
+<h2 id="其他优化手段"><a href="#其他优化手段" class="headerlink" title="其他优化手段"></a>其他优化手段</h2><ul>
+<li><p>直接在元素上可以使用<code>box-shaodw</code>属性做动画：<br></p><p data-height="500" data-theme-id="0" data-slug-hash="BZaGyP" data-default-tab="css,result" data-user="giana" data-embed-version="2" data-pen-title="Button hover effects with box-shadow" class="codepen">See the Pen <a href="https://codepen.io/giana/pen/BZaGyP/" target="_blank" rel="external">Button hover effects with box-shadow</a> by Giana (<a href="https://codepen.io/giana" target="_blank" rel="external">@giana</a>) on <a href="https://codepen.io" target="_blank" rel="external">CodePen</a>.</p><br><script async src="https://production-assets.codepen.io/assets/embed/ei.js"></script><br>需要注意的是，直接在DOM元素上改变<code>box-shaodw</code>性能不如在元素的伪类上改变<code>box-shaodw</code>属性。参见<a href="http://tobiasahlin.com/demo/animate-box-shadow/" target="_blank" rel="external">这里</a>(配合chrome开发者工具的timeline可以明显查看性能差异)<p></p>
+</li>
+<li><p>浏览器有图层概念，一个’图层’上可以有N个DOM元素，而且如果图层中某个元素需要重绘，那么整个图层都需要重绘。 比如gif图渲染每一帧，都会导致所在图层重绘，那就应该将gif元素独立出来达到优化目的。</p>
+<p>附：Chrome中满足以下任意情况就会创建图层：</p>
+<ol>
+<li>3D或透视变换（perspective transform）CSS属性</li>
+<li>使用加速视频解码的<code>&lt;video&gt;</code>节点</li>
+<li>拥有3D（WebGL）上下文或加速的2D上下文的<code>&lt;canvas&gt;</code>节点</li>
+<li>混合插件（如Flash）</li>
+<li>对自己的opacity做CSS动画或使用一个动画webkit变换的元素</li>
+<li>拥有加速CSS过滤器的元素</li>
+<li>元素有一个包含复合层的后代节点（一个元素拥有一个子元素，该子元素在自己的层里）</li>
+<li>元素有一个z-index较低且包含一个复合层的兄弟元素（换句话说就是该元素在复合层上面渲染）</li>
+</ol>
+</li>
+</ul>
+
       
     </div>
 
@@ -334,7 +368,7 @@
     var disqus_config = function () {
         this.page.url = 'https://devilzh.github.io/blog/2017/06/05/css3动画优化/';
         this.page.identifier = '2017/06/05/css3动画优化/';
-        this.page.title = '尾递归与递归问题';
+        this.page.title = '再回首CSS3动画';
     };
     (function() {
     var d = document, s = d.createElement('script');
