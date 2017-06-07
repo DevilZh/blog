@@ -194,7 +194,9 @@
 
         
           <h2 id="问题"><a href="#问题" class="headerlink" title="问题"></a>问题</h2><p>最近想体验一下VSCode（颜值高，功能全，资源占有少）。</p>
-<p>然而刚上手就遇到非常不爽的问题，自带的emmet插件自动补全css老得不到我想要的，比如输入<code>mt</code>,按<code>tab</code>补全出来<code>mask-type</code>而不是<code>margin-top</code>,输入<code>c</code>得到<code>caption-side</code>而不是<code>color</code>。真够蛋疼的。<br><img src="/source/img/emmet.gif" alt="img"></p>
+<p>然而刚上手就遇到非常不爽的问题，自带的emmet插件自动补全css老得不到我想要的:</p>
+<p><img src="/blog/2017/06/07/VSCode诡异的emmet行为/emmet.gif" alt="img"></p>
+<p>输入<code>mt</code>,按<code>tab</code>补全出来<code>mask-type</code>而不是<code>margin-top</code>,输入<code>c</code>得到<code>caption-side</code>而不是<code>color</code>…真够蛋疼的。</p>
 <p>Google了好久才发现是因为跟VSCode自带的默认智能提示冲突了，自带智能提示，也是用的<code>tab</code>键，由于提示优先级比emmet更高的原因，所以得不到我想要的结果。</p>
 <h2 id="解决办法"><a href="#解决办法" class="headerlink" title="解决办法"></a>解决办法</h2><p>修改键盘快捷方式，将选中自带智能提示的键值改为<code>enter</code>即可解决。具体步骤为：<code>首选项-&gt;键盘快捷方式（⌘k⌘s）</code>,然后找到并打开<code>keybinding.json</code>,在右侧提供的覆盖设置区域键入下面设置：<br><figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">&#123; </div><div class="line">    "key": "enter", </div><div class="line">    "command": "acceptSelectedSuggestion",</div><div class="line">    "when": "editorTextFocus &amp;&amp; suggestWidgetVisible" </div><div class="line">&#125;,</div><div class="line">&#123; </div><div class="line">    "key": "tab",</div><div class="line">    "command": "editor.emmet.action.expandAbbreviation",</div><div class="line">    "when": "config.emmet.triggerExpansionOnTab &amp;&amp; editorTextFocus &amp;&amp; !editorHasSelection &amp;&amp; !editorReadonly &amp;&amp; !editorTabMovesFocus" </div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
 
