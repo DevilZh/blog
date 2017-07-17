@@ -173,6 +173,53 @@
     <header class="post-header">
       <h1 class="post-title">
         
+          <a class="post-link" href="/blog/2017/06/28/再认识js的构造函数/">再认识构造函数、返回值和new关键字</a>
+        
+      </h1>
+
+      <div class="post-meta">
+        <span class="post-time">
+          2017年6月28日
+        </span>
+      </div>
+    </header>
+
+    
+    
+
+    <div class="post-content">
+      
+        
+        
+
+        
+          <h2 id="基本概念"><a href="#基本概念" class="headerlink" title="基本概念"></a>基本概念</h2><p>首先要明确和构造函数相关的基本概念，不要觉得概念定义这些都不重要，只要能自己能理解就ok，有时候分不清这些会让自己显得很不专业。 </p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> Person = <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</div><div class="line">    <span class="comment">//  age，showAge: 分别称为实例属性，实例方法（参考 《JavaScript高级程序设计v3》中的翻译）</span></div><div class="line">    <span class="comment">//  因为这样定义的属性和方法，所有实例都会独立copy一份</span></div><div class="line">    <span class="keyword">this</span>.age = <span class="number">20</span>;</div><div class="line">    <span class="keyword">this</span>.showAge = <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</div><div class="line">        alert(<span class="keyword">this</span>.age);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="comment">// _foo,_foo2: 私有属性和方法，开头下划线是比较常见的约定</span></div><div class="line">    <span class="keyword">var</span> _foo = <span class="string">'foo'</span>;</div><div class="line">    <span class="function"><span class="keyword">function</span> <span class="title">_foo2</span>(<span class="params"></span>)</span>&#123;</div><div class="line">        <span class="comment">//...</span></div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="comment">//  job，showJob: 原型属性和方法</span></div><div class="line">Person.prototype = &#123;</div><div class="line">    <span class="attr">job</span>: <span class="string">'FE'</span>,</div><div class="line">    <span class="attr">showJob</span>: <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</div><div class="line">        alert(<span class="keyword">this</span>.job);</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="comment">//bar,bar2: 静态属性和方法</span></div><div class="line">Person.bar = <span class="string">'baz'</span>;</div><div class="line">Person.bar2 = <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</div><div class="line">    <span class="comment">//...</span></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>以上命名都是传统静态语言中的命名对应到js中的叫法。</p>
+<h2 id="返回值问题"><a href="#返回值问题" class="headerlink" title="返回值问题"></a>返回值问题</h2><p>正常情况下，使用构造函数时是不会使用return语句的，但是如果不小心或者刻意加入return语句，会怎样呢？直接上实验结果：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//没有返回值</span></div><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">Test0</span>(<span class="params"></span>)</span>&#123;</div><div class="line">    <span class="keyword">this</span>.name=<span class="string">'test0'</span>;</div><div class="line">&#125;</div><div class="line"><span class="keyword">var</span> test0=<span class="keyword">new</span> Test0;</div><div class="line">alert(test0);   <span class="comment">//输出[Object]</span></div><div class="line">alert(test0.name);  <span class="comment">//输出test0</span></div><div class="line"></div><div class="line"></div><div class="line"></div><div class="line"><span class="comment">//return 一个对象字面量</span></div><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">Test</span>(<span class="params"></span>)</span>&#123;</div><div class="line">    <span class="keyword">this</span>.name=<span class="string">'test'</span>;</div><div class="line">    <span class="keyword">return</span> &#123;&#125;;   <span class="comment">// 返回对象字面量</span></div><div class="line">&#125;</div><div class="line"><span class="keyword">var</span> test=<span class="keyword">new</span> Test();</div><div class="line">alert(test);    <span class="comment">//输出[Object]</span></div><div class="line">alert(test.name);   <span class="comment">//输出undefined，说明构造函数创建的对象是返回的空&#123;&#125;,this指向未生效。</span></div><div class="line"></div><div class="line"></div><div class="line"><span class="comment">//return 一个对象字面量</span></div><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">Test1</span>(<span class="params"></span>)</span>&#123;</div><div class="line">    <span class="keyword">this</span>.name=<span class="string">'test'</span>;</div><div class="line">    <span class="keyword">return</span> [];   <span class="comment">// 返回对象字面量</span></div><div class="line">&#125;</div><div class="line"><span class="keyword">var</span> test1=<span class="keyword">new</span> Test1();</div><div class="line">alert(test1);    <span class="comment">//输出[]</span></div><div class="line">alert(test1.name);   <span class="comment">//输出undefined，说明构造函数创建的对象是返回的空[],this指向未生效。</span></div><div class="line"></div><div class="line"></div><div class="line"><span class="comment">//return 一个字符串对象</span></div><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">Test2</span>(<span class="params"></span>)</span>&#123;</div><div class="line">    <span class="keyword">this</span>.name=<span class="string">'test'</span>;</div><div class="line">    <span class="keyword">return</span> <span class="keyword">new</span> <span class="built_in">String</span>(<span class="string">'123'</span>);   <span class="comment">// 返回字符串对象</span></div><div class="line">&#125;</div><div class="line"><span class="keyword">var</span> test2=<span class="keyword">new</span> Test2();</div><div class="line">alert(test2);    <span class="comment">//输出123</span></div><div class="line">alert(test2.name);   <span class="comment">//输出undefined，说明构造函数创建的对象是字符串对象</span></div><div class="line"></div><div class="line"></div><div class="line"><span class="comment">//return 一个原始类型字符串</span></div><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">Test3</span>(<span class="params"></span>)</span>&#123;</div><div class="line">    <span class="keyword">this</span>.name=<span class="string">'test2'</span>;</div><div class="line">    <span class="keyword">return</span> <span class="string">'123'</span>;<span class="comment">// 返回字符串对象</span></div><div class="line">&#125;</div><div class="line"><span class="keyword">var</span> test3=<span class="keyword">new</span> Test3();</div><div class="line">alert(test3);   <span class="comment">//输出[Object]</span></div><div class="line">alert(test3.name);  <span class="comment">//输出test0</span></div></pre></td></tr></table></figure>
+<p>总结就是，如果返回值是引用类型数据，则使用返回值，否则使用正常构造函数创建绑定流程，<code>return new String(&#39;123&#39;)</code>这种形式生成的其实也是object(可使用typeof new String()验证)。</p>
+<p> 至于为什么是这样的表现，只能说规范是这么定的，说不准以后就改了。</p>
+<h2 id="new关键字"><a href="#new关键字" class="headerlink" title="new关键字"></a>new关键字</h2><p> new 关键字究竟干了什么？结合上面梳理的基本概念来理解，<code>new</code> 大体上干了三件事:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"></div><div class="line"><span class="keyword">var</span> obj = &#123;&#125;； <span class="comment">//创建一个空对象</span></div><div class="line"></div><div class="line">obj.__proto__  == Person.prototype;  <span class="comment">//构造函数的原型对象指向obj.为的是obj能继承原型属性或方法。</span></div><div class="line"></div><div class="line">Person.call(obj). <span class="comment">//将Person的this指向为obj,并执行构造函数，为的是obj能继承实例属性或方法。</span></div></pre></td></tr></table></figure>
+<p>之前就看到过相关博文的分析，然而很快就忘了，记得不够深刻。。。究其原因，还是对构造函数的相关概念理解不深刻导致的，同时充分说明了，要抠细节，一定要对各个语法概念有一个明确、清晰的认识。</p>
+
+        
+      
+    </div>
+
+    
+
+    
+
+  </article>
+
+    
+      
+  <article class="post">
+    <header class="post-header">
+      <h1 class="post-title">
+        
           <a class="post-link" href="/blog/2017/06/27/取消浏览器记录滚动条位置/">取消浏览器记录滚动条位置</a>
         
       </h1>
@@ -591,47 +638,6 @@
 <p>或者<br><figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="built_in">console</span>.log(foo);</div><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">foo</span>(<span class="params"></span>)</span>&#123;</div><div class="line">   <span class="comment">//balabala...</span></div><div class="line">&#125;</div><div class="line"><span class="keyword">var</span> foo = <span class="string">'Hello World!'</span>;</div></pre></td></tr></table></figure></p>
 <p>结果打印出的都是function；</p>
 <p><code>结论</code>：由此可见，js中的函数或者变量提升特性，是先提升函数，再提升变量，（都是基础不扎实的锅啊😔）</p>
-
-        
-      
-    </div>
-
-    
-
-    
-
-  </article>
-
-    
-      
-  <article class="post">
-    <header class="post-header">
-      <h1 class="post-title">
-        
-          <a class="post-link" href="/blog/2017/05/19/实用代码收集/">工作中写的一些常用代码</a>
-        
-      </h1>
-
-      <div class="post-meta">
-        <span class="post-time">
-          2017年5月19日
-        </span>
-      </div>
-    </header>
-
-    
-    
-
-    <div class="post-content">
-      
-        
-        
-
-        
-          <p>对数组打乱洗牌：<br><figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="comment">/*</span></div><div class="line">* @param &#123;Array&#125; array 待洗牌数组</div><div class="line">*/</div><div class="line"><span class="keyword">const</span> shuffle = <span class="function">(<span class="params">array</span>) =&gt;</span> array.sort(<span class="function"><span class="params">()</span>=&gt;</span> <span class="built_in">Math</span>.random()&gt;<span class="number">.5</span> );</div><div class="line">shuffle([<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>,<span class="number">5</span>,<span class="number">6</span>]) <span class="comment">//[2,1,5,3,6,4]</span></div></pre></td></tr></table></figure></p>
-<p>将url query参数全部取出，返回obj:</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">queryString</span>(<span class="params">url</span>)</span>&#123;</div><div class="line">	<span class="keyword">var</span> str = url || <span class="built_in">window</span>.location.href;</div><div class="line">	<span class="keyword">var</span> reg = <span class="regexp">/(?:&amp;|\?)(\w+)=([^#&amp;$\/]+)/g</span></div><div class="line">	<span class="keyword">var</span> queryObj = &#123;&#125;;</div><div class="line">	<span class="keyword">while</span>(<span class="literal">true</span>) &#123;</div><div class="line">		<span class="keyword">var</span> match = reg.exec(str);</div><div class="line">		<span class="keyword">if</span> (!match) <span class="keyword">break</span>;</div><div class="line">		<span class="keyword">if</span>(match[<span class="number">1</span>])&#123;</div><div class="line">			queryObj[match[<span class="number">1</span>]] = match[<span class="number">2</span>];</div><div class="line">		&#125;</div><div class="line">	&#125;</div><div class="line">	<span class="keyword">return</span> queryObj;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>简单实现bind方法：<br><figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="built_in">Function</span>.prototype.bind = <span class="function"><span class="keyword">function</span>(<span class="params">obj</span>)</span>&#123;</div><div class="line">	<span class="keyword">let</span> _self = <span class="keyword">this</span>, arg = <span class="built_in">arguments</span>;</div><div class="line">	<span class="keyword">return</span> <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</div><div class="line">		_self.apply(obj || <span class="keyword">this</span>, <span class="built_in">Array</span>.prototype.slice.call(arg,<span class="number">1</span>));</div><div class="line">	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
 
         
       
